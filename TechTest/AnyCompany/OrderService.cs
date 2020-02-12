@@ -1,4 +1,7 @@
-﻿namespace AnyCompany
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace AnyCompany
 {
     public class OrderService
     {
@@ -7,6 +10,8 @@
         public bool PlaceOrder(Order order, int customerId)
         {
             Customer customer = CustomerRepository.Load(customerId);
+
+            order.CustomerId = customerId;
 
             if (order.Amount == 0)
                 return false;
@@ -19,6 +24,12 @@
             orderRepository.Save(order);
 
             return true;
+        }
+
+
+        public ICollection<Order> LoadOrdersByCustomer(int customerId)
+        {
+            return orderRepository.LoadOrdersByCustomer(customerId);
         }
     }
 }
